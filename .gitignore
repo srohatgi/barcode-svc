@@ -1,0 +1,6 @@
+.gradle/
+.idea/
+.mvn/
+*.iml
+build/
+upload-dir/
