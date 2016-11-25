@@ -1,5 +1,6 @@
 package com.intocloudtech;
 
+import com.intocloudtech.barcode.BarcodeService;
 import com.intocloudtech.storage.StorageFileNotFoundException;
 import com.intocloudtech.storage.StorageService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -21,9 +22,12 @@ public class FileUploadController {
 
     private final StorageService storageService;
 
+    private final BarcodeService barcodeService;
+
     @Autowired
-    public FileUploadController(StorageService storageService) {
+    public FileUploadController(StorageService storageService, BarcodeService barcodeService) {
         this.storageService = storageService;
+        this.barcodeService = barcodeService;
     }
 
     @GetMapping("/")

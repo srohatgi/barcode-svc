@@ -27,6 +27,9 @@ dependencies {
     compile("org.springframework.boot:spring-boot-starter-thymeleaf")
     compile("org.springframework.boot:spring-boot-devtools")
     compile("org.springframework.boot:spring-boot-configuration-processor")
+    compile('com.google.zxing:core:2.2')
+    compile('com.google.zxing:javase:2.2')
+    //compile('ch.qos.logback:logback-classic:1.0.13')
     testCompile("org.springframework.boot:spring-boot-starter-test")
 }
 
