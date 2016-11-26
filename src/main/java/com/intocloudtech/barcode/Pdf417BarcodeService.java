@@ -99,9 +99,6 @@ class AamvaFields {
 
         String[] records = barcodeInfo.split("\\n");
 
-        LOGGER.info("barcodeInfo: {}", barcodeInfo);
-        LOGGER.info("records = {}", (Object)records);
-
         parsedInfo = new HashMap<>();
 
         for(String record : records) {
