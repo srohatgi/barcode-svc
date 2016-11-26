@@ -13,6 +13,7 @@ import org.slf4j.LoggerFactory;
 import javax.imageio.ImageIO;
 import java.awt.image.BufferedImage;
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.LinkedHashMap;
 import java.util.Map;
@@ -28,12 +29,20 @@ public class Pdf417BarcodeService implements BarcodeService {
     @Override
     public Map<String, String> read(Resource file) {
         BufferedImage bufferedImage;
-        Map<DecodeHintType, ?> hints = new HashMap<DecodeHintType, ErrorCorrectionLevel>() {{
-            put(DecodeHintType.PURE_BARCODE, ErrorCorrectionLevel.L);
+        Map<DecodeHintType, ?> hints = new HashMap<DecodeHintType, Object>() {{
+            put(DecodeHintType.POSSIBLE_FORMATS, new ArrayList<BarcodeFormat>() {{
+                add(BarcodeFormat.PDF_417);
+            }});
         }};
 
         try {
             bufferedImage = ImageIO.read(file.getInputStream());
+
+            int h = bufferedImage.getHeight();
+            int w = bufferedImage.getWidth();
+
+            // remove top half of dl
+            bufferedImage = bufferedImage.getSubimage(bufferedImage.getMinX(), bufferedImage.getMinY() + h/2, w, h/2);
 
             BinaryBitmap binaryBitmap = new BinaryBitmap(new HybridBinarizer(
                     new BufferedImageLuminanceSource(bufferedImage)));
@@ -43,7 +52,6 @@ public class Pdf417BarcodeService implements BarcodeService {
             AamvaFields aamvaFields = new AamvaFields(qrCodeResult.getText());
 
             return aamvaFields.parsedInfo;
-
         } catch (IOException e) {
             LOGGER.error("unable to read file", e);
             throw new RuntimeException("unable to read file", e);
