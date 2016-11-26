@@ -1,6 +1,7 @@
 .gradle/
 .idea/
 .mvn/
+*.jpg
 *.iml
 build/
 upload-dir/
